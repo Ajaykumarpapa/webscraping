@@ -1,0 +1,103 @@
+Topic modeling:
+# Install required packages
+!pip install bertopic[transformers] sentence-transformers umap-learn
+
+
+import pandas as pd
+from bertopic import BERTopic
+from umap import UMAP
+from sklearn.feature_extraction.text import CountVectorizer
+import matplotlib.pyplot as plt
+
+
+# Load your data
+from google.colab import files
+uploaded = files.upload()
+
+
+df = pd.read_csv('bigbasket_sentiment_analysis.csv')
+
+
+# Preprocess text
+def clean_text(text):
+   text = str(text).lower()
+   text = text.replace('flag this review', '')
+   text = text.replace('irrelevantfakejunk', '')
+   text = text.replace('thank you! we appreciate your effort.', '')
+   return text.strip()
+
+
+df['clean_content'] = df['content'].apply(clean_text)
+
+
+# Prepare documents list
+docs = df['clean_content'].tolist()
+
+
+# Initialize BERTopic with custom parameters
+umap_model = UMAP(n_neighbors=15, n_components=5, min_dist=0.0)
+vectorizer_model = CountVectorizer(stop_words="english", ngram_range=(1,2))
+
+
+topic_model = BERTopic(
+   language="english",
+   umap_model=umap_model,
+   vectorizer_model=vectorizer_model,
+   min_topic_size=25,
+   nr_topics="auto"
+)
+
+
+# Fit the model
+topics, probs = topic_model.fit_transform(docs)
+
+
+# Get topic information
+topic_info = topic_model.get_topic_info()
+print(topic_info.head(10))
+
+
+# Visualize topics
+fig = topic_model.visualize_barchart(top_n_topics=10, n_words=10)
+fig.show()
+
+
+# Visualize document clustering
+fig = topic_model.visualize_documents(docs, hide_annotations=True)
+fig.show()
+
+
+# Save model
+topic_model.save("bigbasket_bertopic_model")
+
+
+# Save results to CSV
+df['topic'] = topics
+df.to_csv('bigbasket_topics.csv', index=False)
+
+
+# Download results
+files.download('bigbasket_topics.csv')
+
+
+
+
+
+
+
+Another part of the code:
+import pandas as pd
+
+df = pd.read_csv('bigbasket_topics.csv')
+
+unique_topics = sorted(df['topic'].unique())
+print("All topics found in the data:", unique_topics)
+
+print("\nNumber of reviews per topic:")
+print(df['topic'].value_counts().sort_index())
+
+for topic in unique_topics:
+    print(f"\n--- Topic {topic} ---")
+    topic_reviews = df[df['topic'] == topic]['content'].head(3)
+    for i, review in enumerate(topic_reviews, 1):
+        print(f"Example {i}: {review[:300]}")
