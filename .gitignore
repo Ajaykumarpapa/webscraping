@@ -1,0 +1,41 @@
+# Data files
+*.csv
+*.json
+
+# Model files
+bigbasket_bertopic_model/
+*.pkl
+*.pickle
+
+# Output files
+*.png
+*.html
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Test data (optional - uncomment if you want to exclude test data)
+# test_*.csv
