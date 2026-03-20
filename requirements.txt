@@ -1,0 +1,10 @@
+selenium
+beautifulsoup4
+pandas
+chromedriver-autoinstaller
+scikit-learn
+matplotlib
+numpy
+bertopic
+sentence-transformers
+umap-learn

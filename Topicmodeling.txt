@@ -15,7 +15,7 @@ from google.colab import files
 uploaded = files.upload()
 
 
-df = pd.read_csv('bigbasket_sentiment_analysis.csv')
+df = pd.read_csv('sentiment_analysis_results.csv')
 
 
 # Preprocess text
