@@ -32,11 +32,18 @@ Mouthshut.com (Bigbasket Reviews)
 
 | File | Description |
 |------|-------------|
-| `webscraping.txt` | Selenium-based scraper that extracts review titles, content, and ratings across 100 pages |
-| `Sentimentalanalysis.txt` | Naive Bayes sentiment classifier with two implementations (basic and advanced) |
-| `Topicmodeling.txt` | BERTopic-based topic extraction with UMAP dimensionality reduction and visualizations |
+| `webscraping.py` | Selenium-based scraper that extracts review titles, content, and ratings across 100 pages |
+| `sentimentalanalysis.py` | Naive Bayes sentiment classifier with two implementations (basic and advanced) |
+| `topicmodeling.py` | BERTopic-based topic extraction with UMAP dimensionality reduction and visualizations |
+| `requirements.txt` | Python dependencies with minimum version pins |
 
 ## Dependencies
+
+Install all dependencies:
+
+```bash
+pip install -r requirements.txt
+```
 
 ### Web Scraping
 - Selenium
@@ -58,18 +65,18 @@ Mouthshut.com (Bigbasket Reviews)
 
 ## Usage
 
-All scripts are designed to run in **Google Colab**. Open each `.txt` file and copy the code into a Colab notebook, or rename them to `.py` files.
+All scripts are designed to run in **Google Colab**. Copy the code into a Colab notebook and run cell by cell.
 
 ### 1. Scrape Reviews
 
-Run `webscraping.txt` to collect reviews. This will:
+Run `webscraping.py` to collect reviews. This will:
 - Launch a headless Chrome browser
 - Scrape 100 pages of reviews with random delays (6-10s) to avoid detection
 - Save results to `bigbasket_reviews.csv`
 
 ### 2. Analyze Sentiment
 
-Run `Sentimentalanalysis.txt` to classify reviews. Two approaches are included:
+Run `sentimentalanalysis.py` to classify reviews. Two approaches are included:
 - **Basic**: Binary classification (positive/negative) based on rating threshold of 3
 - **Advanced**: Includes text preprocessing, pipeline-based classification, confusion matrix, and sample predictions
 
@@ -77,7 +84,7 @@ Output: `sentiment_analysis_results.csv`
 
 ### 3. Extract Topics
 
-Run `Topicmodeling.txt` to discover themes. This will:
+Run `topicmodeling.py` to discover themes. This will:
 - Clean review text
 - Fit a BERTopic model with custom UMAP parameters
 - Generate topic bar charts and document clustering visualizations
@@ -91,3 +98,7 @@ Run `Topicmodeling.txt` to discover themes. This will:
 | `sentiment_analysis_results.csv` | Reviews with predicted sentiment labels |
 | `bigbasket_topics.csv` | Reviews with assigned topic IDs |
 | `bigbasket_bertopic_model/` | Saved BERTopic model for reuse |
+
+## License
+
+MIT License
